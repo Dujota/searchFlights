@@ -5,8 +5,6 @@ get '/' do
   redirect to ('/searchFlights/:origin/:destination')
 end
 
-get
-
 get '/searchFlights/:origin/:destination' do
 
 # save inputs from http request
