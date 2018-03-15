@@ -2,7 +2,7 @@ require 'sinatra'
 require 'csv'
 
 get '/' do
-  redirect to ('/searchFlights/:origin/:destination')
+  redirect to ('/searchFlights/add_Origin/add_Destination')
 end
 
 get '/searchFlights/:origin/:destination' do
@@ -66,17 +66,11 @@ YYC|6/30/2014 9:30:00|YYZ|6/30/2014 17:05:00|$535.00"
   provider3.gsub!("|", ',')
 
   # Parse each provider and only push a row to matches [] if it matches our params Origin & Destination
-  CSV.parse(provider1, headers: true) do |row|
-  matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
-  end
+  CSV.parse(provider1, headers: true) { |row| matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase }
 
-  CSV.parse(provider2, headers: true) do |row|
-  matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
-  end
+  CSV.parse(provider2, headers: true) { |row| matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase }
 
-  CSV.parse(provider3, headers: true) do |row|
-  matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
-  end
+  CSV.parse(provider3, headers: true) { |row| matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase }
 
   # Sort by price and departure time then loop & format for output string to: {Origin} --> {Destination} ({Departure Time} --> {Destination Time}) - {Price} and get rid of duplicates
   sorted_matches = matches.sort_by{ |match|
@@ -85,14 +79,6 @@ YYC|6/30/2014 9:30:00|YYZ|6/30/2014 17:05:00|$535.00"
     "#{match["Origin"]} --> #{match["Destination"]} (#{match["Departure Time"]} --> #{match["Destination Time"]}) - #{match["Price"]}"
   }.uniq
 
-  # matches.sort_by!{|match| [match["Price"], match["Departure Time"]] }
-  #
-  # # loop & format for output string: {Origin} --> {Destination} ({Departure Time} --> {Destination Time}) - {Price}
-  # matches.each do |match|
-  # display = "#{match["Origin"]} --> #{match["Destination"]} (#{match["Departure Time"]} --> #{match["Destination Time"]}) - #{match["Price"]}"
-  #
-  # sorted_matches << display
-  # end
 
   # Finally decide what we want to display and pass it to output variable
   if sorted_matches.length == 0
