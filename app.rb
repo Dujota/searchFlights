@@ -73,6 +73,9 @@ get '/searchFlights/:origin/:destination' do
     matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
   end
 
+  # Sort by price and departure time
+  matches.sort_by!{|match| [match["Price"], match["Departure Time"]] }
+
 
 
 
