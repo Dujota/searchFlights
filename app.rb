@@ -10,7 +10,8 @@ get '/searchFlights/:origin/:destination' do
   # Containers for data
   matches = []
   sorted_matches = []
-  final_output = []
+  output = []
+  render_output = output.join("<br>")
 
   # Our working Data set
   provider1 = "Origin,Departure Time,Destination,Destination Time,Price
@@ -95,6 +96,6 @@ get '/searchFlights/:origin/:destination' do
     output = sorted_matches.uniq
   end
 
-  
+  "#{render_output}"
 
 end
