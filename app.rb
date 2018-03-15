@@ -83,6 +83,18 @@ get '/searchFlights/:origin/:destination' do
     sorted_matches << display
   end
 
+  # Finally decide what we want to display
+  if sorted_matches.length == 0
+    output << "No Flights Found for #{orig} --> #{dest}"
+  elsif  sorted_matches.length == 1
+    display = "#{matches["Origin"]} --> #{matches["Destination"]} (#{matches["Departure Time"]} --> #{matches["Destination Time"]}) - #{matches["Price"]}"
 
+    output << display
+  else
+  # get rid of the duplocates
+    output = sorted_matches.uniq
+  end
+
+  
 
 end
