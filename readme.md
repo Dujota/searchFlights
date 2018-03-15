@@ -18,9 +18,6 @@ Example Deployed link to Heroku:  https://sixt4-searchflight.herokuapp.com/searc
 ├── Rakefile
 ├── app.rb
 ├── config.ru
-└── spec
-    ├── app_spec.rb
-    └── spec_helper.rb
 ```
 ### Prerequisites
 
@@ -46,7 +43,5 @@ YYC --> YYZ (6/30/2014 10:30:00 --> 6/30/2014 18:10:00) - $548.00
 
 
 ## Built With
-
 * [Ruby](http://www.ruby-lang.org/en/) - Ruby 2.5.0 Release
 * [Sinatra](https://maven.apache.org/) - Web Framework used
-* [RSpec](http://rspec.info/) - Test Suite
