@@ -78,15 +78,21 @@ YYC|6/30/2014 9:30:00|YYZ|6/30/2014 17:05:00|$535.00"
   matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
   end
 
-  # Sort by price and departure time
-  matches.sort_by!{|match| [match["Price"], match["Departure Time"]] }
+  # Sort by price and departure time then loop & format for output string to: {Origin} --> {Destination} ({Departure Time} --> {Destination Time}) - {Price} and get rid of duplicates
+  sorted_matches = matches.sort_by{ |match|
+    [match["Price"], match["Departure Time"]]
+  }.map { |match|
+    "#{match["Origin"]} --> #{match["Destination"]} (#{match["Departure Time"]} --> #{match["Destination Time"]}) - #{match["Price"]}"
+  }.uniq
 
-  # loop & format for output string: {Origin} --> {Destination} ({Departure Time} --> {Destination Time}) - {Price}
-  matches.each do |match|
-  display = "#{match["Origin"]} --> #{match["Destination"]} (#{match["Departure Time"]} --> #{match["Destination Time"]}) - #{match["Price"]}"
-
-  sorted_matches << display
-  end
+  # matches.sort_by!{|match| [match["Price"], match["Departure Time"]] }
+  #
+  # # loop & format for output string: {Origin} --> {Destination} ({Departure Time} --> {Destination Time}) - {Price}
+  # matches.each do |match|
+  # display = "#{match["Origin"]} --> #{match["Destination"]} (#{match["Departure Time"]} --> #{match["Destination Time"]}) - #{match["Price"]}"
+  #
+  # sorted_matches << display
+  # end
 
   # Finally decide what we want to display and pass it to output variable
   if sorted_matches.length == 0
