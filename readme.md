@@ -13,6 +13,7 @@ Clone Repo at: https://github.com/Dujota/searchFlights.git
 Example Deployed link to Heroku:  https://sixt4-searchflight.herokuapp.com/searchFlights/yyz/yyc
 
 ### Application Folder structure
+```
 .
 ├── Rakefile
 ├── app.rb
@@ -20,7 +21,7 @@ Example Deployed link to Heroku:  https://sixt4-searchflight.herokuapp.com/searc
 └── spec
     ├── app_spec.rb
     └── spec_helper.rb
-
+```
 ### Prerequisites
 
 Install dependencies by running bundler package management
