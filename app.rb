@@ -16,8 +16,6 @@ get '/searchFlights/:origin/:destination' do
   sorted_matches = []
   output = []
 
-
-
 # Our working Data set
 provider1 = "Origin,Departure Time,Destination,Destination Time,Price
 LAS,6/23/2014 13:30:00,LAX,6/23/2014 14:40:00,$151.00
