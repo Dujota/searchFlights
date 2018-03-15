@@ -7,14 +7,14 @@ end
 
 get '/searchFlights/:origin/:destination' do
 
-# save inputs from http request
-orig = params[:origin]
-dest = params[:destination]
+  # save inputs from http request
+  orig = params[:origin]
+  dest = params[:destination]
 
-# Containers for data
-matches = []
-sorted_matches = []
-output = []
+  # Containers for data
+  matches = []
+  sorted_matches = []
+  output = []
 
 
 
@@ -61,46 +61,46 @@ YYZ|6/22/2014 12:00:00|YYC|6/22/2014 14:09:00|$630.00
 LAS|6/15/2014 9:54:00|LAX|6/15/2014 11:05:00|$286.00
 YYC|6/30/2014 9:30:00|YYZ|6/30/2014 17:05:00|$535.00"
 
-# reformat provider 2 & 3 as provider1
-provider2.gsub!(/-/, '/')
-provider3.gsub!("|", ',')
+  # reformat provider 2 & 3 as provider1
+  provider2.gsub!(/-/, '/')
+  provider3.gsub!("|", ',')
 
-# Parse each provider and only push a row to matches [] if it matches our params Origin & Destination
-CSV.parse(provider1, headers: true) do |row|
-matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
-end
+  # Parse each provider and only push a row to matches [] if it matches our params Origin & Destination
+  CSV.parse(provider1, headers: true) do |row|
+  matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
+  end
 
-CSV.parse(provider2, headers: true) do |row|
-matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
-end
+  CSV.parse(provider2, headers: true) do |row|
+  matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
+  end
 
-CSV.parse(provider3, headers: true) do |row|
-matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
-end
+  CSV.parse(provider3, headers: true) do |row|
+  matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
+  end
 
-# Sort by price and departure time
-matches.sort_by!{|match| [match["Price"], match["Departure Time"]] }
+  # Sort by price and departure time
+  matches.sort_by!{|match| [match["Price"], match["Departure Time"]] }
 
-# loop & format for output string: {Origin} --> {Destination} ({Departure Time} --> {Destination Time}) - {Price}
-matches.each do |match|
-display = "#{match["Origin"]} --> #{match["Destination"]} (#{match["Departure Time"]} --> #{match["Destination Time"]}) - #{match["Price"]}"
+  # loop & format for output string: {Origin} --> {Destination} ({Departure Time} --> {Destination Time}) - {Price}
+  matches.each do |match|
+  display = "#{match["Origin"]} --> #{match["Destination"]} (#{match["Departure Time"]} --> #{match["Destination Time"]}) - #{match["Price"]}"
 
-sorted_matches << display
-end
+  sorted_matches << display
+  end
 
-# Finally decide what we want to display
-if sorted_matches.length == 0
-output << "No Flights Found for #{orig} --> #{dest}"
-elsif  sorted_matches.length == 1
-display = "#{matches["Origin"]} --> #{matches["Destination"]} (#{matches["Departure Time"]} --> #{matches["Destination Time"]}) - #{matches["Price"]}"
+  # Finally decide what we want to display
+  if sorted_matches.length == 0
+  output << "No Flights Found for #{orig} --> #{dest}"
+  elsif  sorted_matches.length == 1
+  display = "#{matches["Origin"]} --> #{matches["Destination"]} (#{matches["Departure Time"]} --> #{matches["Destination Time"]}) - #{matches["Price"]}"
 
-output << display
-else
-# get rid of the duplicates
-output = sorted_matches.uniq
-end
+  output << display
+  else
+  # get rid of the duplicates
+  output = sorted_matches.uniq
+  end
 
-# Final output to the endpoint
-output.join("<br>")
+  # Final output to the endpoint
+  output.join("<br>")
 
 end
