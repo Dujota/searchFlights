@@ -15,7 +15,7 @@ dest = params[:destination]
 matches = []
 sorted_matches = []
 output = []
-# final_output = []
+
 
 
 # Our working Data set
@@ -100,8 +100,7 @@ else
 output = sorted_matches.uniq
 end
 
-final_output = output.join("<br>")
+# Final output to the endpoint
+output.join("<br>")
 
-
-"#{final_output}"
 end
