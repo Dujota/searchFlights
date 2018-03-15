@@ -1,10 +1,5 @@
-require 'rubygems'
 require 'sinatra'
 require 'csv'
-
-configure :production do
-  
-end
 
 get '/searchFlights/:origin/:destination' do
 
