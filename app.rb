@@ -60,6 +60,20 @@ get '/searchFlights/:origin/:destination' do
   provider2.gsub!(/-/, '/')
   provider3.gsub!("|", ',')
 
+  # Parse each provider and only push a row to matches [] if it matches our params Origin & Destination
+  CSV.parse(provider1, headers: true) do |row|
+    matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
+  end
+
+  CSV.parse(provider2, headers: true) do |row|
+    matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
+  end
+
+  CSV.parse(provider3, headers: true) do |row|
+    matches << row.to_h if row['Origin'] == orig.upcase && row['Destination'] == dest.upcase
+  end
+
+
 
 
 end
