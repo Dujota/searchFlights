@@ -76,6 +76,12 @@ get '/searchFlights/:origin/:destination' do
   # Sort by price and departure time
   matches.sort_by!{|match| [match["Price"], match["Departure Time"]] }
 
+  # loop & format for output string: {Origin} --> {Destination} ({Departure Time} --> {Destination Time}) - {Price}
+  matches.each do |match|
+    display = "#{match["Origin"]} --> #{match["Destination"]} (#{match["Departure Time"]} --> #{match["Destination Time"]}) - #{match["Price"]}"
+
+    sorted_matches << display
+  end
 
 
 
