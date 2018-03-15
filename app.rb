@@ -56,5 +56,10 @@ get '/searchFlights/:origin/:destination' do
   LAS|6/15/2014 9:54:00|LAX|6/15/2014 11:05:00|$286.00
   YYC|6/30/2014 9:30:00|YYZ|6/30/2014 17:05:00|$535.00"
 
+  # reformat provider 2 & 3 as provider1
+  provider2.gsub!(/-/, '/')
+  provider3.gsub!("|", ',')
+
+
 
 end
