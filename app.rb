@@ -88,13 +88,11 @@ YYC|6/30/2014 9:30:00|YYZ|6/30/2014 17:05:00|$535.00"
   sorted_matches << display
   end
 
-  # Finally decide what we want to display
+  # Finally decide what we want to display and pass it to output variable
   if sorted_matches.length == 0
   output << "No Flights Found for #{orig} --> #{dest}"
   elsif  sorted_matches.length == 1
-  display = "#{matches["Origin"]} --> #{matches["Destination"]} (#{matches["Departure Time"]} --> #{matches["Destination Time"]}) - #{matches["Price"]}"
-
-  output << display
+  output << sorted_matches.first
   else
   # get rid of the duplicates
   output = sorted_matches.uniq
